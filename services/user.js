@@ -20,28 +20,28 @@ const putUserById = async (id, data) => {
   if (emailExists) throw error("Email alreadt in use", 404);
   return User.findByIdAndUpdate(id, { ...data }, { new: true });
 };
-const findUserByProperty = (key, value) => {
+const findUserByProperty = async (key, value) => {
   try {
     if (key === "_id") {
-      return User.findById(value);
+      return await User.findById(value);
     }
-    return User.findOne({ [key]: value });
+    return await User.findOne({ [key]: value });
   } catch (error) {
     console.log(error);
   } //it means that the key of the object is dynamic and determined by the value of the key variable.
 };
 
-function getUsers() {
+async function getUsers() {
   try {
-    return User.find();
+    return await User.find();
   } catch (error) {
     console.log(error);
   }
 }
 
-function deleteUser(key, value) {
+async function deleteUser(key, value) {
   try {
-    return User.findOneAndRemove({ [key]: value });
+    return await User.findOneAndRemove({ [key]: value });
   } catch (error) {
     console.log(error);
   }

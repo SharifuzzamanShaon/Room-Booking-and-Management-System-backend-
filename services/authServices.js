@@ -10,7 +10,7 @@ async function registerService({ name, email, password }) {
     const isEmailExists = await findUserByProperty("email", email);
     if (isEmailExists) throw error("User alreay exists", 400);
     const hash = await bcrypt.hash(password, saltRounds);
-    return registerNewUser({
+    return await registerNewUser({
       name,
       email,
       password: hash,

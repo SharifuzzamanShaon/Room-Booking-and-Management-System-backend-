@@ -27,44 +27,16 @@ const registerController = async (req, res, next) => {
     next(error);
   }
 };
-// const loginController = async (req, res, next) => {
-//   try {
-//     const { email, password } = req.body;
-//     if (!email) throw error("email is required", 400);
-//     if (!password) throw error("password is required", 400);
-//     await loginService({ email, password, res, next });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-// ... existing code ...
-
 const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
-      throw error("email and password are required", 400);
-
-    const user = await User.findOne({ email: email }).maxTimeMS(5000);
-    if (!user) throw error("user not found", 404);
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) throw error("Password does not match", 401);
-
-    const payload = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
-
-    sendToken(payload, 200, res, next);
-  } catch (err) {
-    next(err);
+    if (!email) throw error("email is required", 400);
+    if (!password) throw error("password is required", 400);
+    await loginService({ email, password, res, next });
+  } catch (error) {
+    next(error);
   }
 };
-
-// ... existing code ...
 const logout = async (req, res, next) => {
   try {
     res.cookie("access_token", "", { maxAge: 1 });

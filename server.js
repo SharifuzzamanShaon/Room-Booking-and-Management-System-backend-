@@ -14,7 +14,7 @@ app.get("/health", (req, res) => {
 });
 app.use(
   cors({
-    origin: "http://localhost:3000", // This should match the address of your frontend
+    origin: [process.env.CLIENT_side_port, process.env.ADMIN_side_port], // This should match the address of your frontend
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Enable this if you need to handle cookies
   })

@@ -9,7 +9,7 @@ exports.connectDB = async () => {
       socketTimeoutMS: 45000,
       // Add these options:
       connectTimeoutMS: 30000,
-      bufferCommands: false, // Disable buffering
+      // bufferCommands: false, // Disable buffering
       maxPoolSize: 10, // Maintain up to 10 socket connections
     });
   } catch (error) {

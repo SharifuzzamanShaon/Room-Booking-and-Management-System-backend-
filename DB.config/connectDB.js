@@ -5,8 +5,12 @@ exports.connectDB = async () => {
     await mongoose.connect(`${process.env.mongoDB_connection_str}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 20000, // Increase timeout to 20 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      serverSelectionTimeoutMS: 30000, // Increase to 30 seconds
+      socketTimeoutMS: 45000,
+      // Add these options:
+      connectTimeoutMS: 30000,
+      bufferCommands: false, // Disable buffering
+      maxPoolSize: 10, // Maintain up to 10 socket connections
     });
   } catch (error) {
     console.log(error);

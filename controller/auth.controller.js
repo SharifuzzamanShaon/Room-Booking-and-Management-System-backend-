@@ -45,7 +45,7 @@ const loginController = async (req, res, next) => {
     if (!email || !password)
       throw error("email and password are required", 400);
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).maxTimeMS(5000);
     if (!user) throw error("user not found", 404);
 
     const passwordMatch = await bcrypt.compare(password, user.password);

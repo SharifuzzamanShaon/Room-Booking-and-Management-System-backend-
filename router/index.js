@@ -15,7 +15,7 @@ router.get("/get-all-rooms", getAllRoom);
 router.get("/get-room-details-&-status/:id", getRoomDetailsAndBookingStatus);
 router.get("/check-booking-status/:room", checkPreviousBookingStatus); //avoid conflict booking
 router.use("/auth", authRouter);
-router.use("/book-room-by-use", authMiddleware, manageBookRoomByUser);
-router.use("/admin", authMiddleware, authorize("admin"), adminRouter);
+router.use("/book-room-by-use",  manageBookRoomByUser);
+router.use("/admin", adminRouter);
 
 module.exports = router;

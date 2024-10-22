@@ -27,6 +27,30 @@ app.use((error, req, res, text) => {
   res.status(status).json({ success: false, message });
 });
 
+const https = require("https");
+
+function getServerIP() {
+  https
+    .get("https://ifconfig.me", (resp) => {
+      let data = "";
+
+      // A chunk of data has been received.
+      resp.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      // The whole response has been received. Print out the result.
+      resp.on("end", () => {
+        console.log("Server Public IP:", data);
+      });
+    })
+    .on("error", (err) => {
+      console.error("Error fetching public IP:", err.message);
+    });
+}
+
+getServerIP();
+
 const port = process.env.PORT;
 app.listen(port, async () => {
   console.log(`server Running at http://localhost:${port}`);

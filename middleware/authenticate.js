@@ -6,12 +6,12 @@ const authMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.access_token || true;
 
-    const validToken = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+    const validToken = jwt.verify(token, process.env.ACCESS_TOKEN_KEY); //verify the token
 
     const userId = validToken?._id;
     const validUser = await User.findById(userId);
 
-    if (validUser) {
+    if (!validUser) {
       throw error("User not found", 401);
     }
 

@@ -6,7 +6,6 @@ const sendToken = require("../utils/token.jwt");
 
 // Roles & accountStatus using by admin function
 async function registerService({ name, email, password }) {
-  try {
     const isEmailExists = await findUserByProperty("email", email);
     if (isEmailExists) throw error("User alreay exists", 400);
     const hash = await bcrypt.hash(password, saltRounds);
@@ -15,12 +14,9 @@ async function registerService({ name, email, password }) {
       email,
       password: hash,
     });
-  } catch (error) {
-    console.log(error);
-  }
+ 
 }
 async function loginService({ email, password, res, next }) {
-  try {
     const validUser = await findUserByProperty("email", email);
     if (!validUser) throw error("User not registered yet", 400);
 
@@ -33,8 +29,5 @@ async function loginService({ email, password, res, next }) {
       role: validUser.role,
     };
     sendToken(payload, 200, res, next);
-  } catch (error) {
-    console.log(error);
-  }
 }
 module.exports = { registerService, loginService };

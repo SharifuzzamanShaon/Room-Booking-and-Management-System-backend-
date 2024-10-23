@@ -4,9 +4,10 @@ const User = require("../models/user.model");
 
 const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.cookies?.access_token || true;
-
-    const validToken = jwt.verify(token, process.env.ACCESS_TOKEN_KEY); //verify the token
+    const token = req.cookies?.access_token ;
+    console.log(typeof token);
+    const tokenString = token ? String(token) : '';
+    const validToken = jwt.verify(tokenString, process.env.ACCESS_TOKEN_KEY); //verify the token
 
     const userId = validToken?._id;
     const validUser = await User.findById(userId);

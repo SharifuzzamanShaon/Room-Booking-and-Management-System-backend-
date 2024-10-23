@@ -5,7 +5,6 @@ const User = require("../models/user.model");
 const authMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.access_token ;
-    console.log(typeof token);
     const tokenString = token ? String(token) : '';
     const validToken = jwt.verify(tokenString, process.env.ACCESS_TOKEN_KEY); //verify the token
 
